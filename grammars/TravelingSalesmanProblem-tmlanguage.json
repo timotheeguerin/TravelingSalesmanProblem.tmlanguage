@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "TravelingSalesmanProblem",
+  "scopeName": "source.tsp",
+  "fileTypes": [
+    "tsp"
+  ],
+  "patterns": [
+    {
+      "include": "#statement"
+    }
+  ],
+  "repository": {
+    "numeric-literal": {
+      "name": "constant.numeric.tsp",
+      "match": "(?:\\b(?<!\\$)0(?:x|X)[0-9a-fA-F][0-9a-fA-F_]*(n)?\\b(?!\\$)|\\b(?<!\\$)0(?:b|B)[01][01_]*(n)?\\b(?!\\$)|(?<!\\$)(?:(?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(\\.)[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\B(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(\\.)(n)?\\B)|(?:\\B(\\.)[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(n)?\\b(?!\\.)))(?!\\$))"
+    },
+    "spec-entry": {
+      "name": "meta.spec-entry.travelingsalesmanproblem",
+      "begin": "(\\b[_$[:alpha:]][_$[:alnum:]]*\\b)\\s*(:)\\s*",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.tsp"
+        }
+      },
+      "end": "(?<=\\})|(?=\n)",
+      "patterns": [
+        {
+          "include": "#numeric-literal"
+        },
+        {
+          "include": "#string-value"
+        }
+      ]
+    },
+    "statement": {
+      "patterns": [
+        {
+          "include": "#spec-entry"
+        }
+      ]
+    },
+    "string-value": {
+      "name": "string.unquoted.plain.out.yaml",
+      "match": "\\b[_$[:alpha:]][_$[:alnum:]]*\\b"
+    }
+  }
+}
