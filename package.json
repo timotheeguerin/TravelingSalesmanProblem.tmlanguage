@@ -5,8 +5,8 @@
   "description": "Tm Grammar for TravelingSalesmanProblem file format (.tsp)",
   "type": "module",
   "scripts": {
-    "build": "tsc -p . && npm run generate-tmlanguage",
-    "watch": "tsc -p . --watch",
+    "build": "tsc -p tsconfig.build.json && npm run generate-tmlanguage",
+    "watch": "tsc -p tsconfig.build.json --watch",
     "generate-tmlanguage": "node dist/grammar.js",
     "test": "vitest run ",
     "test:watch": "vitest -w"
@@ -16,7 +16,9 @@
   "devDependencies": {
     "@types/node": "^20.11.30",
     "typescript": "^5.4.3",
-    "vitest": "^1.4.0"
+    "vitest": "^1.4.0",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.0.0"
   },
   "dependencies": {
     "tmlanguage-generator": "^0.5.3"

@@ -20,7 +20,6 @@
     "lib": ["ES2022"],
     "skipLibCheck": true, // Issue with Node16 module resolution for now.
     "newLine": "LF",
-    "rootDir": "./src",
-    "outDir": "dist"
+    "noEmit": true
   }
 }

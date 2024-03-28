@@ -20,17 +20,16 @@ export type TypeSpecScope =
   | "punctuation.separator.key-value.mapping.yaml";
 
 const meta: typeof tm.meta = tm.meta;
-const identifierStart = "[_$[:alpha:]]";
+const alphaStart = "[_$[:alpha:]]";
 // cspell:disable-next-line
-const identifierContinue = "[_$[:alnum:]]";
-const alphaNumericalData = `\\b${identifierStart}${identifierContinue}*\\b`;
+const alphaNumeric = "[_$[:alnum:]]";
+const alphaNumericalData = `${alphaStart}(?:[^:\\n])*`;
+const keyword = `\\b${alphaStart}${alphaNumeric}*\\b`;
 const universalEnd = `(?=\n)`;
 
 /**
  * Universal end with extra end char: `=`
  */
-const hexNumber = "\\b(?<!\\$)0(?:x|X)[0-9a-fA-F][0-9a-fA-F_]*(n)?\\b(?!\\$)";
-const binaryNumber = "\\b(?<!\\$)0(?:b|B)[01][01_]*(n)?\\b(?!\\$)";
 const decimalNumber =
   "(?<!\\$)(?:" +
   "(?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|" + // 1.1E+3
@@ -42,7 +41,7 @@ const decimalNumber =
   "(?:\\B(\\.)[0-9][0-9_]*(n)?\\b)|" + // .1
   "(?:\\b[0-9][0-9_]*(n)?\\b(?!\\.))" + // 1
   ")(?!\\$)";
-const anyNumber = `(?:${hexNumber}|${binaryNumber}|${decimalNumber})`;
+const anyNumber = `(?:${decimalNumber})`;
 
 const numericValue: MatchRule = {
   key: "numeric-literal",
@@ -59,9 +58,10 @@ const stringValue: MatchRule = {
 const specEntry: BeginEndRule = {
   key: "spec-entry",
   scope: meta,
-  begin: `(${alphaNumericalData})\\s*(:)\\s*`,
+  begin: `(${keyword})\\s*(:)\\s*`,
   beginCaptures: {
     "1": { scope: "keyword.other.tsp" },
+    "2": { scope: "punctuation.separator.key-value.mapping.yaml" },
   },
   end: `(?<=\\})|${universalEnd}`,
   patterns: [numericValue, stringValue],
