@@ -1,0 +1,26 @@
+{
+  "name": "travelingsalesmanproblem.tmlanguage",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Tm Grammar for TravelingSalesmanProblem file format (.tsp)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && npm run generate-tmlanguage",
+    "watch": "tsc -p tsconfig.build.json --watch",
+    "generate-tmlanguage": "node dist/grammar.js",
+    "test": "vitest run ",
+    "test:watch": "vitest -w"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.0.0"
+  },
+  "dependencies": {
+    "tmlanguage-generator": "^0.5.3"
+  }
+}
