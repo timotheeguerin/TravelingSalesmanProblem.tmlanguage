@@ -15,6 +15,7 @@ export type TypeSpecScope =
   | "constant.numeric.tsp"
   | "string.unquoted.plain.out.yaml"
   // Entities
+  | "keyword.eof.tsp"
   | "keyword.other.tsp"
   // Punctuation
   | "punctuation.separator.key-value.mapping.yaml";
@@ -25,7 +26,6 @@ const alphaStart = "[_$[:alpha:]]";
 const alphaNumeric = "[_$[:alnum:]]";
 const alphaNumericalData = `${alphaStart}(?:[^:\\n])*`;
 const keyword = `\\b${alphaStart}${alphaNumeric}*\\b`;
-const universalEnd = `(?=\n)`;
 
 /**
  * Universal end with extra end char: `=`
@@ -63,8 +63,25 @@ const specEntry: BeginEndRule = {
     "1": { scope: "keyword.other.tsp" },
     "2": { scope: "punctuation.separator.key-value.mapping.yaml" },
   },
-  end: `(?<=\\})|${universalEnd}`,
+  end: `(?=\n)`,
   patterns: [numericValue, stringValue],
+};
+
+const eofKeyword: MatchRule = {
+  key: "eof-keyword",
+  scope: "keyword.eof.tsp",
+  match: "EOF\\n?",
+};
+
+const dataEntry: BeginEndRule = {
+  key: "data-entry",
+  scope: meta,
+  begin: `(${keyword})\\s*\\n`,
+  beginCaptures: {
+    "1": { scope: "keyword.other.tsp" },
+  },
+  end: `(?=EOF)`,
+  patterns: [numericValue],
 };
 
 const statement: IncludeRule = {
@@ -77,7 +94,7 @@ const grammar: Grammar = {
   name: "TravelingSalesmanProblem",
   scopeName: "source.tsp",
   fileTypes: ["tsp"],
-  patterns: [statement],
+  patterns: [eofKeyword, dataEntry, statement],
 };
 
 async function main() {

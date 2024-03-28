@@ -16,11 +16,50 @@
     <array>
       <dict>
         <key>include</key>
+        <string>#eof-keyword</string>
+      </dict>
+      <dict>
+        <key>include</key>
+        <string>#data-entry</string>
+      </dict>
+      <dict>
+        <key>include</key>
         <string>#statement</string>
       </dict>
     </array>
     <key>repository</key>
     <dict>
+      <key>data-entry</key>
+      <dict>
+        <key>name</key>
+        <string>meta.data-entry.travelingsalesmanproblem</string>
+        <key>begin</key>
+        <string>(\b[_$[:alpha:]][_$[:alnum:]]*\b)\s*\n</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.other.tsp</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?=EOF)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#numeric-literal</string>
+          </dict>
+        </array>
+      </dict>
+      <key>eof-keyword</key>
+      <dict>
+        <key>name</key>
+        <string>keyword.eof.tsp</string>
+        <key>match</key>
+        <string>EOF\n?</string>
+      </dict>
       <key>numeric-literal</key>
       <dict>
         <key>name</key>
@@ -48,7 +87,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})|(?=
+        <string>(?=
 )</string>
         <key>patterns</key>
         <array>

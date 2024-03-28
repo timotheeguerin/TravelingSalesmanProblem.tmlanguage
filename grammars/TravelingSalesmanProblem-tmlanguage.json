@@ -7,10 +7,35 @@
   ],
   "patterns": [
     {
+      "include": "#eof-keyword"
+    },
+    {
+      "include": "#data-entry"
+    },
+    {
       "include": "#statement"
     }
   ],
   "repository": {
+    "data-entry": {
+      "name": "meta.data-entry.travelingsalesmanproblem",
+      "begin": "(\\b[_$[:alpha:]][_$[:alnum:]]*\\b)\\s*\\n",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.tsp"
+        }
+      },
+      "end": "(?=EOF)",
+      "patterns": [
+        {
+          "include": "#numeric-literal"
+        }
+      ]
+    },
+    "eof-keyword": {
+      "name": "keyword.eof.tsp",
+      "match": "EOF\\n?"
+    },
     "numeric-literal": {
       "name": "constant.numeric.tsp",
       "match": "(?:(?<!\\$)(?:(?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(\\.)[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\B(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(\\.)(n)?\\B)|(?:\\B(\\.)[0-9][0-9_]*(n)?\\b)|(?:\\b[0-9][0-9_]*(n)?\\b(?!\\.)))(?!\\$))"
@@ -26,7 +51,7 @@
           "name": "punctuation.separator.key-value.mapping.yaml"
         }
       },
-      "end": "(?<=\\})|(?=\n)",
+      "end": "(?=\n)",
       "patterns": [
         {
           "include": "#numeric-literal"
